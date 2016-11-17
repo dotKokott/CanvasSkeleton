@@ -7,21 +7,17 @@ function draw(dt) {
   ctx.fillStyle = bgColor;
   ctx.fillRect(0, 0, WIDTH, HEIGHT);
 
-  ctx.save();
-
-  ctx.translate((WIDTH / 2) - (75), (HEIGHT / 2));
-  //fillHeart();
-
-  const heartCount = 20;
-  for(let i = 0; i < heartCount; i++) {
-    //ctx.scale(0.95 + Math.cos(totalSeconds) * 0.01, 0.95  + Math.cos(totalSeconds) * 0.05);
-    ctx.scale(0.95, 0.95);
-    let offset = (360 / heartCount) * i;
-
-    ctx.translate(Math.cos(totalSeconds * 1 * i) * 10, 5 + Math.sin(10 + totalSeconds * 2) * 10);
-    fillHeart(HSLA(0, offset * Math.cos(totalSeconds * 0.4) * 5));
+  const GRID_X = 30;
+  const GRID_Y = 30;
+  for(var x = 0; x < WIDTH / GRID_X; x++) {
+    for(var y = 0; y < HEIGHT / GRID_Y; y++) {
+      var posX = x * GRID_X;
+      var posY = y * GRID_Y;
+      
+      var radius = Math.abs(Math.cos(x - totalSeconds) * 20 * Math.sin(y - totalSeconds));
+      var color = HSLA(0, radius * 20);
+      //strokeCircle(posX, posY, radius, 2, color);
+      fillCircle(posX, posY, radius, color);
+    }
   }
-
-
-  ctx.restore();
 }
